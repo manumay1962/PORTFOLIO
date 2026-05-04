@@ -41,17 +41,18 @@ export default function CustomCursor() {
       
       sparkle.style.width = `${size}px`;
       sparkle.style.height = `${size}px`;
-      sparkle.style.left = `${x}px`;
-      sparkle.style.top = `${y}px`;
+      
+      // Use purely hardware-accelerated transforms to completely eliminate layout reflow lag
+      sparkle.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1)`;
 
       requestAnimationFrame(() => {
-        sparkle.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(0)`;
+        sparkle.style.transform = `translate3d(${x + tx}px, ${y + ty}px, 0) scale(0)`;
         sparkle.style.opacity = "0";
       });
 
       setTimeout(() => {
         if (sparkle.parentNode) sparkle.remove();
-      }, 800); // Lasts longer for a thicker trail
+      }, 700);
     };
 
     const updatePosition = (e) => {
@@ -63,11 +64,8 @@ export default function CustomCursor() {
       }
 
       const now = performance.now();
-      // Lower the debounce to 15ms so it spits out way more particles
-      if (now - lastSparkleTime > 15) {
-        // Create TWO sparkles per tick for double the density!
-        // 30px down and right perfectly matches the rocket exhaust position
-        createSparkle(mouseX + 30, mouseY + 30);
+      // Increase debounce slightly and only spawn 1 per frame to save CPU/GPU cycles
+      if (now - lastSparkleTime > 30) {
         createSparkle(mouseX + 30, mouseY + 30);
         lastSparkleTime = now;
       }
