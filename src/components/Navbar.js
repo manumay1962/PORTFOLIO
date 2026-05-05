@@ -61,7 +61,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <button className="btn-resume" onClick={() => window.open("https://storage.googleapis.com/weekday-resume-attachments/4k3iiqn9de900000001777903889928", "_blank")}>
+          <button className="btn-resume" onClick={() => window.open("https://storage.googleapis.com/weekday-resume-attachments/uv7hv07gevo00000001778020275424", "_blank")}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
