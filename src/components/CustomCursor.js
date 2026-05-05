@@ -45,10 +45,11 @@ export default function CustomCursor() {
       // Use purely hardware-accelerated transforms to completely eliminate layout reflow lag
       sparkle.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1)`;
 
-      requestAnimationFrame(() => {
+      // Need a slight delay to allow the browser to paint the initial state before applying the transition
+      setTimeout(() => {
         sparkle.style.transform = `translate3d(${x + tx}px, ${y + ty}px, 0) scale(0)`;
         sparkle.style.opacity = "0";
-      });
+      }, 10);
 
       setTimeout(() => {
         if (sparkle.parentNode) sparkle.remove();
